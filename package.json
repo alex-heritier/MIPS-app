@@ -1,0 +1,14 @@
+{
+  "name": "mips_web",
+  "version": "0.0.1",
+  "description": "MIPS in the browser",
+  "main": "client.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "mips"
+  ],
+  "author": "Alex Heritier",
+  "license": "MIT"
+}

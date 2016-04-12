@@ -1,0 +1,27 @@
+.editor {
+    margin-bottom: 5px;
+}
+
+.console, .internals-panel, .editor textarea {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    padding-left: 9.5px;
+    padding-right: 9.5px;
+}
+
+.editor textarea {
+    width: 100%;
+    max-width: 100%;
+}
+
+pre {
+    white-space: pre;
+    word-break: normal;
+    word-wrap: normal;
+    outline: none;
+}
+
+.console {
+    height: 50px;
+}

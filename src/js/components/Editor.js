@@ -27,9 +27,9 @@ export default class Editor extends React.Component {
 
     render() {
         return (
-            <div class="col-md-9">
-                <div class={"editor"}>
-                    <pre id={"code-area"} contentEditable onKeyUp={this.handleChange.bind(this)}>
+            <div class="col-lg-12">
+                <div class="editor">
+                    <pre class="code-area" contentEditable onKeyUp={this.handleChange.bind(this)}>
                         <div style={{color: "gray"}}># your code here</div>
                         <div><br /></div>
                         <div>li $v0, 69</div>

@@ -1,6 +1,6 @@
 class Interpreter {
     run(code) {
-        let registerState = this.getClearState();
+        const registerState = this.getClearState();
         for (let i = 0; i < code.length; i++) {
             if (code[i] == "\n" || code[i] == "" || code[i].charAt(0) == "#") continue;
 
@@ -16,14 +16,111 @@ class Interpreter {
             const args = line;
 
             switch (instruction) {
-                case "li":
-                    registerState[args[0]] = parseInt(args[1]);
-                    break;
                 case "add":
                     registerState[args[0]] = registerState[args[1]] + registerState[args[2]];
                     break;
                 case "addi":
                     registerState[args[0]] = registerState[args[1]] + parseInt(args[2]);
+                    break;
+                case "addiu":
+                    registerState[args[0]] = registerState[args[1]] + parseInt(args[2]);
+                    break;
+                case "addu":
+                    registerState[args[0]] = registerState[args[1]] + registerState[args[2]];
+                    break;
+                case "and":
+                    registerState[args[0]] = registerState[args[1]] & registerState[args[2]];
+                    break;
+                case "andi":
+                    registerState[args[0]] = registerState[args[1]] & parseInt(args[2]);
+                    break;
+                case "beq":
+                case "bgez":
+                case "bgezal":
+                case "blez":
+                case "bltz":
+                case "bltzal":
+                case "bne":
+                    throw `ERROR: instruction ${instruction} not yet implemented.`;
+                    break;
+                case "div":
+                    registerState[args[0]] = Math.floor(registerState[args[1]] / registerState[args[2]]);
+                    break;
+                case "divu":
+                    registerState[args[0]] = Math.floor(registerState[args[1]] / registerState[args[2]]);
+                    break;
+                case "j":
+                case "jal":
+                case "jr":
+                    throw `ERROR: instruction ${instruction} not yet implemented.`;
+                    break;
+                case "lb":
+                    throw `ERROR: instruction ${instruction} not yet implemented.`;
+                    break;
+                case "lui":
+                    registerState[args[0]] = (parseInt(args[1]) << 16);
+                    break;
+                case "lw":
+                    throw `ERROR: instruction ${instruction} not yet implemented.`;
+                    break;
+                case "mfhi":
+                    registerState[args[0]] = registerState["$HI"];
+                    break;
+                case "mflo":
+                    registerState[args[0]] = registerState["$LO"];
+                    break;
+                case "mult":
+                case "multu":
+                    registerState["$LO"] = registerState[args[0]] * registerState[args[1]];
+                    break;
+                case "noop":
+                    break;
+                case "or":
+                    registerState[args[0]] = registerState[args[1]] | registerState[args[2]];
+                    break;
+                case "ori":
+                    registerState[args[0]] = registerState[args[1]] | parseInt(args[2]);
+                    break;
+                case "sb":
+                    throw `ERROR: instruction ${instruction} not yet implemented.`;
+                    break;
+                case "sll":
+                    registerState[args[0]] = registerState[args[1]] << parseInt([args[2]]);
+                    break;
+                case "sllv":
+                    registerState[args[0]] = registerState[args[1]] << registerState[args[2]];
+                    break;
+                case "slt":
+                case "sltu":
+                    registerState[args[0]] = registerState[args[1]] < registerState[args[2]] ? 1 : 0;
+                    break;
+                case "slti":
+                case "sltiu":
+                    registerState[args[0]] = registerState[args[1]] < parseInt(args[2]) ? 1 : 0;
+                    break;
+                case "srl":
+                    registerState[args[0]] = registerState[args[1]] >> parseInt([args[2]]);
+                    break;
+                case "srlv":
+                    registerState[args[0]] = registerState[args[1]] >> registerState[args[2]];
+                    break;
+                case "sub":
+                case "subu":
+                    registerState[args[0]] = registerState[args[1]] - registerState[args[2]];
+                    break;
+                case "sw":
+                case "syscall":
+                    throw `ERROR: instruction ${instruction} not yet implemented.`;
+                    break;
+                case "xor":
+                    registerState[args[0]] = registerState[args[1]] ^ registerState[args[2]];
+                    break;
+                case "xori":
+                    registerState[args[0]] = registerState[args[1]] ^ parseInt(args[2]);
+                    break;
+                /* Pseudo-instructions */
+                case "li":
+                    registerState[args[0]] = parseInt(args[1]);
                     break;
                 case "move":
                     registerState[args[0]] = registerState[args[1]];
@@ -36,7 +133,7 @@ class Interpreter {
         }
         return registerState;
     }
-    
+
     getClearState() {
         return {
             "$zero": 0,
@@ -71,6 +168,8 @@ class Interpreter {
             "$sp": 0,
             "$fp": 0,
             "$ra": 0,
+            "$HI": 0,
+            "$LO": 0,
         };
     }
 }

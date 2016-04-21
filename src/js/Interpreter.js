@@ -1,8 +1,21 @@
+import getClearMemory from "./clearMemory";
 import getClearState from "./clearState";
 
 class Interpreter {
+    parseAddress(addr, registerState) {
+        const tokens = addr.split(/[()]/);
+        if (tokens.length != 3)
+            throw `ERROR: address ${addr} is malformed.`
+        // console.log(tokens);
+        const base = registerState[tokens[1]];
+        const offset = parseInt(tokens[0]);
+
+        return base + offset;
+    }
+
     run(code) {
         let registerState = getClearState();
+        let memory = getClearMemory(0xFF);
         for (let i = 0; i < code.length; i++) {
             if (code[i] == "\n" || code[i] == "" || code[i].charAt(0) == "#") continue;
 
@@ -17,6 +30,7 @@ class Interpreter {
             }
             const args = line;
 
+            let address;
             switch (instruction) {
                 case "add":
                     registerState[args[0]] = registerState[args[1]] + registerState[args[2]];
@@ -84,7 +98,8 @@ class Interpreter {
                     registerState[args[0]] = registerState[args[1]] | parseInt(args[2]);
                     break;
                 case "sb":
-                    throw `ERROR: instruction ${instruction} not yet implemented.`;
+                    address = this.parseAddress(args[1], registerState);
+                    memory[address] = registerState[args[0]];
                     break;
                 case "sll":
                     registerState[args[0]] = registerState[args[1]] << parseInt([args[2]]);
@@ -111,6 +126,9 @@ class Interpreter {
                     registerState[args[0]] = registerState[args[1]] - registerState[args[2]];
                     break;
                 case "sw":
+                    address = this.parseAddress(args[1], registerState);
+                    memory[address] = registerState[args[0]];
+                    break;
                 case "syscall":
                     throw `ERROR: instruction ${instruction} not yet implemented.`;
                     break;
@@ -133,7 +151,11 @@ class Interpreter {
             // console.log(registerState);
             registerState["$zero"] = 0;
         }
-        return registerState;
+
+        return {
+            registerState,
+            memory,
+        };
     }
 }
 

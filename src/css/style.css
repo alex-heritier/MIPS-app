@@ -40,3 +40,56 @@
 .internals-panel .right-registers {
     float: right;
 }
+
+.memory-bank-tabs .tab {
+    float: left;
+    margin-right: 5px;
+    padding: 2px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 70px;
+    text-align: center;
+}
+
+.memory-bank-tabs .tab:hover {
+    cursor: pointer;
+}
+
+.memory-bank-tabs .active-bank {
+    font-weight: bold;
+}
+
+.memory-bank-tabs {
+    height: 30px;
+    clear: both;
+}
+
+.memory-panel {
+    height: 85px;
+    padding: 0px;
+}
+
+.memory-col {
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 100%;
+    float: left;
+    border-right: 1px solid #ccc;
+}
+
+.memory-col:last-child {
+    border-right: 0;
+}
+
+.memory-cell {
+    width: 84px;
+    clear: both;
+}
+
+.memory-col .address {
+    float: left;
+}
+
+.memory-col .value {
+    float: right;
+}

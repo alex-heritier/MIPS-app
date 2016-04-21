@@ -6,6 +6,7 @@ import InternalsPanel from "../components/InternalsPanel";
 import Interpreter from "../Interpreter.js";
 import MemoryPanel from "../components/MemoryPanel";
 
+import getClearMemory from "../clearMemory";
 import getClearState from "../clearState";
 
 export default class EmulatorPanel extends React.Component {
@@ -18,14 +19,20 @@ export default class EmulatorPanel extends React.Component {
     }
 
     changeCode(code) {
-        const newRegisters = Interpreter.run(code);
-        console.log(newRegisters);
-        this.setState({registers: newRegisters});
+        const newState = Interpreter.run(code);
+        // console.log(newState);
+        this.setState({
+            registers: newState.registerState,
+            memory: newState.memory,
+        });
     }
 
     // called after the component mounts
     componentDidMount() {
-        this.setState({registers: getClearState()});
+        this.setState({
+            registers: getClearState(),
+            memory: getClearMemory(0xFF),
+        });
     }
 
     render() {

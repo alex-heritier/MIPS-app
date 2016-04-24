@@ -1,5 +1,7 @@
 import React from "react";
 
+import Utility from "../Utility.js"
+
 export default class MemoryPanel extends React.Component {
     constructor() {
         super();
@@ -28,34 +30,6 @@ export default class MemoryPanel extends React.Component {
         }
     }
 
-    toHex(num) {
-        let hex = "0x";
-        hex += toHexDigit(parseInt(num / 16));
-        num %= 16;
-        hex += toHexDigit(num);
-
-        return hex;
-
-        function toHexDigit(num) {
-            switch (num) {
-                case 10:
-                    return 'A';
-                case 11:
-                    return 'B';
-                case 12:
-                    return 'C';
-                case 13:
-                    return 'D';
-                case 14:
-                    return 'E';
-                case 15:
-                    return 'F';
-                default:
-                    return num;
-            }
-        }
-    }
-
     render() {
         const memoryCells = [];
         const startIndex = this.state.activeBank * (0x100 / 8);
@@ -64,8 +38,8 @@ export default class MemoryPanel extends React.Component {
             memoryCells.push(
                 <MemoryCell
                     key={i}
-                    address={this.toHex(i)}
-                    value={this.toHex(this.props.memory[i])}/>
+                    address={Utility.toHex(i)}
+                    value={Utility.toHex(this.props.memory[i])}/>
             );
         }
 

@@ -1,5 +1,7 @@
 import React from "react";
 
+import Utility from "../Utility.js";
+
 export default class InternalsPanel extends React.Component {
     render() {
         const registersLeft = [];
@@ -43,7 +45,7 @@ class InternalsRow extends React.Component {
             <div>
                 <div style={registerDisplay}>
                     <span style={left}>{this.props.index}: </span>
-                    <span style={right}>{this.props.value}</span>
+                    <span style={right}>{Utility.toHex(this.props.value)}</span>
                 </div>
                 <br />
             </div>

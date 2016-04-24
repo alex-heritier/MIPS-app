@@ -71,13 +71,15 @@ class Interpreter {
                     throw `ERROR: instruction ${instruction} not yet implemented.`;
                     break;
                 case "lb":
-                    throw `ERROR: instruction ${instruction} not yet implemented.`;
+                    address = this.parseAddress(args[1], registerState);
+                    registerState[args[0]] = memory[address];
                     break;
                 case "lui":
                     registerState[args[0]] = (parseInt(args[1]) << 16);
                     break;
                 case "lw":
-                    throw `ERROR: instruction ${instruction} not yet implemented.`;
+                    address = this.parseAddress(args[1], registerState);
+                    registerState[args[0]] = memory[address];
                     break;
                 case "mfhi":
                     registerState[args[0]] = registerState["$HI"];
